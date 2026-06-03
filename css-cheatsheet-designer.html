@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>網頁設計師 CSS Cheat Sheet</title>
+<style>
+  :root {
+    --pink: #ED93B1; --pink-dark: #72243E; --pink-light: #FBEAF0;
+    --teal: #1D9E75; --teal-dark: #085041; --teal-light: #E1F5EE;
+    --purple: #7F77DD; --purple-dark: #3C3489; --purple-light: #EEEDFE;
+    --amber: #EF9F27; --amber-dark: #633806; --amber-light: #FAEEDA;
+    --coral: #D85A30; --coral-dark: #4A1B0C; --coral-light: #FAECE7;
+    --blue: #378ADD; --blue-dark: #0C447C; --blue-light: #E6F1FB;
+    --green: #639922; --green-dark: #27500A; --green-light: #EAF3DE;
+    --red: #E24B4A; --red-dark: #501313; --red-light: #FCEBEB;
+    --gray: #888780; --gray-dark: #2C2C2A; --gray-light: #F1EFE8;
+    --bg: #FFFFFF;
+    --bg2: #F7F7F5;
+    --bg3: #F0EEE8;
+    --text: #1A1A18;
+    --text2: #6B6A65;
+    --text3: #9E9D98;
+    --border: rgba(0,0,0,0.1);
+    --border2: rgba(0,0,0,0.18);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --font: -apple-system, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg3);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── 整體版面 ── */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--border);
+    padding: 36px 40px 32px;
+    margin-bottom: 32px;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--purple-light);
+    color: var(--purple-dark);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--text2);
+    margin-bottom: 20px;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .toc-item {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .toc-item:hover {
+    background: var(--purple-light);
+    border-color: var(--purple);
+    color: var(--purple-dark);
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border2);
+  }
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 19px; font-weight: 600; }
+  .section-sub { font-size: 12px; color: var(--text2); margin-top: 2px; font-family: var(--mono); }
+
+  /* ── Prop Grid & Card ── */
+  .prop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .prop-card {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .prop-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+  .prop-name {
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--mono);
+    margin-bottom: 5px;
+  }
+  .prop-desc {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+
+  /* ── Code block ── */
+  .code-block {
+    background: var(--bg2);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-size: 12px;
+    font-family: var(--mono);
+    line-height: 1.75;
+    margin-bottom: 12px;
+    white-space: pre-wrap;
+    border: 0.5px solid var(--border);
+  }
+
+  /* ── Tags & Labels ── */
+  .row-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 5px;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  /* ── Warn boxes ── */
+  .warn-box {
+    font-size: 12px;
+    border-radius: var(--radius-md);
+    padding: 8px 10px;
+    margin-top: 8px;
+    border-left: 3px solid;
+    line-height: 1.55;
+  }
+  .warn-red { background: var(--red-light); border-color: var(--red); color: var(--red-dark); }
+  .warn-amber { background: var(--amber-light); border-color: var(--amber); color: var(--amber-dark); }
+  .warn-teal { background: var(--teal-light); border-color: var(--teal); color: var(--teal-dark); }
+
+  /* ── Color helpers ── */
+  .tag-pink { background: var(--pink-light); color: var(--pink-dark); }
+  .tag-teal { background: var(--teal-light); color: var(--teal-dark); }
+  .tag-purple { background: var(--purple-light); color: var(--purple-dark); }
+  .tag-amber { background: var(--amber-light); color: var(--amber-dark); }
+  .tag-coral { background: var(--coral-light); color: var(--coral-dark); }
+  .tag-blue { background: var(--blue-light); color: var(--blue-dark); }
+  .tag-green { background: var(--green-light); color: var(--green-dark); }
+  .tag-gray { background: var(--gray-light); color: var(--gray-dark); }
+  .tag-red { background: var(--red-light); color: var(--red-dark); }
+
+  /* ── Accent bars ── */
+  .pink-accent::before { background: var(--pink); }
+  .teal-accent::before { background: var(--teal); }
+  .purple-accent::before { background: var(--purple); }
+  .amber-accent::before { background: var(--amber); }
+  .coral-accent::before { background: var(--coral); }
+  .blue-accent::before { background: var(--blue); }
+  .green-accent::before { background: var(--green); }
+  .gray-accent::before { background: var(--gray); }
+
+  /* ── Info box ── */
+  .info-box {
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .info-box-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .info-box-body { font-size: 12px; line-height: 1.65; }
+
+  /* ── Full-width card ── */
+  .full-card {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .full-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+
+  /* ── Quick ref table ── */
+  .qr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+  }
+  .qr-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    padding: 5px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .qr-key { color: var(--text2); }
+  .qr-val {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--bg2);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  /* ── Demo buttons ── */
+  .btn-demo-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
+  .demo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: default;
+    border: none;
+    padding: 8px 18px;
+    white-space: nowrap;
+    font-family: var(--font);
+  }
+  .btn-primary { background: var(--purple); color: white; }
+  .btn-secondary { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--border2); }
+  .btn-danger { background: var(--red); color: white; }
+  .btn-hover { background: #534AB7; color: white; }
+  .btn-active { background: var(--purple-dark); color: white; transform: scale(0.97); }
+  .btn-disabled { background: var(--bg2); color: var(--text3); border: 1px solid var(--border); cursor: not-allowed; opacity: 0.6; }
+
+  /* ── Flex demo ── */
+  .flex-demo {
+    display: flex;
+    gap: 6px;
+    padding: 10px;
+    background: var(--bg2);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+    min-height: 52px;
+    align-items: center;
+  }
+  .flex-box {
+    background: var(--purple-light);
+    border: 1px solid var(--purple);
+    color: var(--purple-dark);
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* ── DevTools flow ── */
+  .flow-step { display: flex; gap: 14px; align-items: flex-start; }
+  .flow-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .flow-connector { width: 28px; display: flex; justify-content: center; flex-shrink: 0; }
+  .flow-line { width: 1.5px; height: 18px; background: var(--border2); }
+  .flow-content { padding-bottom: 14px; flex: 1; }
+  .flow-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .flow-desc { font-size: 12px; color: var(--text2); line-height: 1.55; }
+
+  /* ── State table ── */
+  .state-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 10px; }
+  .state-table th {
+    background: var(--bg2);
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border2);
+  }
+  .state-table td {
+    padding: 10px 12px;
+    border-bottom: 0.5px solid var(--border);
+    vertical-align: middle;
+  }
+  .state-table tr:last-child td { border-bottom: none; }
+
+  /* ── VS table ── */
+  .vs-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .vs-table th {
+    background: var(--bg2);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border2);
+  }
+  .vs-table td {
+    padding: 10px 12px;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 12px;
+    vertical-align: top;
+  }
+  .vs-table tr:last-child td { border-bottom: none; }
+
+  /* ── Spinner ── */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner {
+    width: 13px; height: 13px;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text3);
+    padding-top: 32px;
+    border-top: 0.5px solid var(--border2);
+    margin-top: 48px;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: white; }
+    .page { padding: 20px; }
+    .toc-item:hover { background: var(--bg); border-color: var(--border); color: var(--text); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ╔══ HERO ══╗ -->
+  <div class="hero">
+    <div class="hero-tag">CSS Quick Reference · 設計師版</div>
+    <h1>網頁設計師<br>CSS Cheat Sheet</h1>
+    <p>以設計師思維整理，不是工程教科書。<br>涵蓋卡片、按鈕、間距、文字、Flex、圖片、Hover 效果，以及 DevTools 實戰流程。</p>
+    <div class="hero-badges">
+      <span class="badge tag-pink">🃏 卡片設計</span>
+      <span class="badge tag-purple">🔘 按鈕設計</span>
+      <span class="badge tag-teal">📐 間距控制</span>
+      <span class="badge tag-amber">🔤 文字設定</span>
+      <span class="badge tag-coral">🧱 Flex 排版</span>
+      <span class="badge tag-blue">🖼 圖片控制</span>
+      <span class="badge tag-pink">✨ Hover 效果</span>
+      <span class="badge tag-green">📦 容器設定</span>
+      <span class="badge tag-gray">🔧 DevTools</span>
+    </div>
+  </div>
+
+  <!-- ╔══ TOC ══╗ -->
+  <div class="toc">
+    <a href="#card" class="toc-item">🃏 卡片設計</a>
+    <a href="#button" class="toc-item">🔘 按鈕設計</a>
+    <a href="#spacing" class="toc-item">📐 間距控制</a>
+    <a href="#typography" class="toc-item">🔤 文字設定</a>
+    <a href="#flex" class="toc-item">🧱 Flex 排版</a>
+    <a href="#image" class="toc-item">🖼 圖片控制</a>
+    <a href="#hover" class="toc-item">✨ Hover 效果</a>
+    <a href="#container" class="toc-item">📦 容器設定</a>
+    <a href="#devtools" class="toc-item">🔧 DevTools</a>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   1. 卡片設計               -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="card">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--pink-light);">🃏</div>
+      <div>
+        <div class="section-title">卡片設計</div>
+        <div class="section-sub">border-radius · overflow · box-shadow · border · background</div>
+      </div>
+    </div>
+    <div class="prop-grid">
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">border-radius</div>
+        <div class="prop-desc">控制圓角大小。數值越大越圓，設成 50% 變正圓。</div>
+        <div class="code-block">border-radius: 12px;
+border-radius: 50%;          /* 正圓 */
+border-radius: 8px 0 8px 0;  /* 對角圓 */</div>
+        <div class="row-label">常見搭配</div>
+        <div class="tag-row">
+          <span class="tag tag-pink">overflow: hidden</span>
+          <span class="tag tag-teal">box-shadow</span>
+        </div>
+        <div class="row-label">常見用途</div>
+        <div class="tag-row">
+          <span class="tag tag-pink">卡片</span>
+          <span class="tag tag-pink">按鈕</span>
+          <span class="tag tag-pink">頭像</span>
+          <span class="tag tag-pink">圖片框</span>
+        </div>
+        <div class="warn-box warn-red">⚠️ 踩雷：只設 border-radius，沒加 overflow: hidden，圖片不會跟著裁切！</div>
+      </div>
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">overflow</div>
+        <div class="prop-desc">控制超出容器範圍的內容要怎麼處理。</div>
+        <div class="code-block">overflow: hidden;   /* 裁掉超出的 */
+overflow: visible;  /* 預設，讓它超出 */
+overflow: scroll;   /* 加滾動條 */
+overflow: auto;     /* 需要才加滾動條 */</div>
+        <div class="row-label">常見用途</div>
+        <div class="tag-row">
+          <span class="tag tag-pink">圖片圓角裁切</span>
+          <span class="tag tag-pink">Hover 動畫收邊</span>
+        </div>
+        <div class="warn-box warn-amber">💡 設計師必記：卡片 + 圓角 + 圖片，三個一起用就一定要加 overflow: hidden</div>
+      </div>
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">box-shadow</div>
+        <div class="prop-desc">元素的陰影效果，可以模擬立體感、懸浮感。</div>
+        <div class="code-block">/* x偏移 y偏移 模糊 擴散 顏色 */
+box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+
+/* 多層陰影，更自然 */
+box-shadow:
+  0 1px 3px rgba(0,0,0,0.08),
+  0 8px 24px rgba(0,0,0,0.12);
+
+/* 去掉陰影 */
+box-shadow: none;</div>
+        <div class="row-label">常見搭配</div>
+        <div class="tag-row">
+          <span class="tag tag-pink">border-radius</span>
+          <span class="tag tag-pink">transition</span>
+        </div>
+        <div class="warn-box warn-red">⚠️ 踩雷：陰影顏色不要用純黑 #000，改用 rgba(0,0,0,0.1) 更自然</div>
+      </div>
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">border</div>
+        <div class="prop-desc">元素的邊框，可以單獨設定四個方向。</div>
+        <div class="code-block">border: 1px solid #E0E0E0;
+border-top: 2px solid #7F77DD; /* 單邊 */
+border: none;
+outline: 2px solid blue; /* 不影響排版 */</div>
+        <div class="row-label">常見用途</div>
+        <div class="tag-row">
+          <span class="tag tag-pink">分隔線</span>
+          <span class="tag tag-pink">選取狀態</span>
+          <span class="tag tag-pink">卡片框線</span>
+        </div>
+      </div>
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">background</div>
+        <div class="prop-desc">背景顏色或漸層，是塑造視覺氛圍的核心屬性。</div>
+        <div class="code-block">background: #F5F5F5;
+background: transparent;
+background: linear-gradient(
+  135deg, #667EEA, #764BA2
+);
+background: url('img.png')
+  no-repeat center/cover;</div>
+        <div class="row-label">常見搭配</div>
+        <div class="tag-row">
+          <span class="tag tag-pink">border-radius</span>
+          <span class="tag tag-pink">padding</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   2. 按鈕設計               -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="button">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--purple-light);">🔘</div>
+      <div>
+        <div class="section-title">按鈕設計</div>
+        <div class="section-sub">reset · 外觀 · 尺寸 · 狀態 · 圖示 · 特殊用途</div>
+      </div>
+    </div>
+
+    <div class="info-box" style="background:var(--purple-light);">
+      <div class="info-box-title" style="color:var(--purple-dark);">🧠 設計師理解按鈕 CSS 的方式</div>
+      <div class="info-box-body" style="color:var(--purple-dark);opacity:0.88;">
+        按鈕 = 一個 &lt;button&gt; 或 &lt;a&gt; 標籤，透過 background、color、padding、border-radius 組合外觀，<br>
+        再用 :hover / :active / :disabled 偽類控制互動狀態。先設計「預設狀態」，再疊加各種互動狀態。
+      </div>
+    </div>
+
+    <!-- Reset -->
+    <div class="full-card gray-accent" style="margin-bottom:14px;">
+      <div class="prop-name" style="margin-bottom:6px;">第一步：重置瀏覽器預設樣式</div>
+      <div class="prop-desc">瀏覽器對 button 有預設外框、背景、字體，要先清掉。每次做按鈕，這段先貼上。</div>
+      <div class="code-block">button {
+  appearance: none;       /* 去掉瀏覽器預設外觀 */
+  border: none;           /* 去掉預設邊框 */
+  background: none;       /* 去掉預設背景 */
+  cursor: pointer;        /* 滑鼠變手指 */
+  font-family: inherit;   /* 繼承字體（預設不繼承！）*/
+  font-size: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}</div>
+      <div class="warn-box warn-red">⚠️ 踩雷：button 預設不繼承 font-family，不加這行按鈕字體會跟網站其他地方不同！</div>
+    </div>
+
+    <div class="prop-grid">
+
+      <div class="prop-card purple-accent">
+        <div class="prop-name">background + color（類型）</div>
+        <div class="prop-desc">按鈕背景和文字色，決定視覺重量層級。</div>
+        <div class="code-block">/* 實心主要按鈕 */
+background: #7F77DD;
+color: white;
+
+/* 透明外框按鈕 */
+background: transparent;
+color: #7F77DD;
+border: 1.5px solid #7F77DD;
+
+/* 幽靈按鈕 */
+background: transparent;
+color: inherit;
+border: 1.5px solid currentColor;</div>
+        <div class="btn-demo-row">
+          <div class="demo-btn btn-primary">主要</div>
+          <div class="demo-btn btn-secondary">外框</div>
+          <div class="demo-btn btn-ghost">幽靈</div>
+        </div>
+      </div>
+
+      <div class="prop-card purple-accent">
+        <div class="prop-name">padding + border-radius（形狀）</div>
+        <div class="prop-desc">padding 決定按鈕呼吸空間，border-radius 決定圓角程度。</div>
+        <div class="code-block">/* 一般按鈕 */
+padding: 10px 20px;
+border-radius: 8px;
+
+/* 藥丸型 */
+padding: 10px 24px;
+border-radius: 9999px;
+
+/* 圖示按鈕 */
+width: 40px; height: 40px;
+padding: 0;
+border-radius: 8px;</div>
+        <div class="btn-demo-row">
+          <div class="demo-btn btn-primary">一般</div>
+          <div class="demo-btn btn-primary" style="border-radius:9999px;">藥丸型</div>
+          <div class="demo-btn btn-secondary" style="width:40px;height:40px;padding:0;border-radius:8px;">＋</div>
+        </div>
+      </div>
+
+      <div class="prop-card purple-accent">
+        <div class="prop-name">尺寸變體（sm / md / lg）</div>
+        <div class="prop-desc">統一設定按鈕大小系統，整個網站才會一致。</div>
+        <div class="code-block">.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+.btn-md { /* 預設 */
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+.btn-lg {
+  padding: 14px 32px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+.btn-full { width: 100%; }</div>
+        <div class="btn-demo-row" style="align-items:center;">
+          <div class="demo-btn btn-primary" style="padding:6px 12px;font-size:12px;border-radius:6px;">Small</div>
+          <div class="demo-btn btn-primary">Medium</div>
+          <div class="demo-btn btn-primary" style="padding:14px 32px;font-size:15px;border-radius:10px;">Large</div>
+        </div>
+      </div>
+
+      <div class="prop-card coral-accent">
+        <div class="prop-name">font-weight + white-space</div>
+        <div class="prop-desc">按鈕文字通常比內文稍粗，white-space 防止文字斷行。</div>
+        <div class="code-block">font-weight: 500;        /* 中粗，最常用 */
+font-weight: 600;        /* 強調型 */
+letter-spacing: 0.04em;  /* 微拉開，精緻感 */
+white-space: nowrap;     /* 防止按鈕文字換行 */</div>
+        <div class="warn-box warn-amber">💡 white-space: nowrap 很重要！避免按鈕在窄容器裡文字斷行變醜</div>
+      </div>
+
+      <div class="prop-card coral-accent">
+        <div class="prop-name">:hover / :active / :disabled</div>
+        <div class="prop-desc">用偽類（pseudo-class）控制按鈕每個互動狀態，不需要 JavaScript。</div>
+        <div class="code-block">.btn {
+  background: #7F77DD;
+  color: white;
+  transition: all 0.2s ease; /* ← 必須在這！*/
+}
+.btn:hover {
+  background: #534AB7;
+  box-shadow: 0 4px 12px
+    rgba(127,119,221,0.4);
+}
+.btn:active {
+  transform: scale(0.97);
+  background: #3C3489;
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn:focus-visible {
+  outline: 2px solid #7F77DD;
+  outline-offset: 2px;
+}</div>
+        <div class="btn-demo-row">
+          <div class="demo-btn btn-primary">預設</div>
+          <div class="demo-btn btn-hover">:hover</div>
+          <div class="demo-btn btn-active">:active</div>
+          <div class="demo-btn btn-disabled">:disabled</div>
+        </div>
+        <div class="warn-box warn-red">⚠️ 踩雷：transition 要寫在 .btn，不是 .btn:hover，不然 hover 移開瞬間切換沒動畫</div>
+      </div>
+
+      <div class="prop-card blue-accent">
+        <div class="prop-name">圖示 + 文字對齊</div>
+        <div class="prop-desc">用 Flex 讓圖示和文字整齊垂直置中。</div>
+        <div class="code-block">.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn svg, .btn img {
+  width: 16px; height: 16px;
+  flex-shrink: 0; /* 防止被壓縮 */
+}</div>
+        <div class="btn-demo-row">
+          <div class="demo-btn btn-primary">↑ 上傳</div>
+          <div class="demo-btn btn-secondary">＋ 新增</div>
+          <div class="demo-btn btn-ghost">✉ 傳送</div>
+        </div>
+      </div>
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">危險操作按鈕</div>
+        <div class="prop-desc">刪除、清空等不可逆操作，用紅色警示使用者。</div>
+        <div class="code-block">.btn-danger {
+  background: #E24B4A;
+  color: white;
+}
+.btn-danger:hover {
+  background: #A32D2D;
+}</div>
+        <div class="btn-demo-row">
+          <div class="demo-btn btn-danger">刪除帳號</div>
+          <div class="demo-btn" style="background:transparent;color:#E24B4A;border:1.5px solid #E24B4A;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:500;">取消訂閱</div>
+        </div>
+      </div>
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">Loading 狀態</div>
+        <div class="prop-desc">送出表單後防止重複點擊，給予等待視覺提示。</div>
+        <div class="code-block">.btn.loading {
+  opacity: 0.7;
+  cursor: wait;
+  pointer-events: none;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}</div>
+        <div class="btn-demo-row">
+          <div class="demo-btn" style="background:var(--purple);color:rgba(255,255,255,0.75);padding:8px 18px;border-radius:8px;">
+            <div class="spinner"></div> 處理中...
+          </div>
+        </div>
+      </div>
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">&lt;a&gt; 連結當按鈕用</div>
+        <div class="prop-desc">跳轉頁面的按鈕語意上用 &lt;a&gt;，但外觀做成按鈕。</div>
+        <div class="code-block">/* HTML */
+&lt;a href="/page" class="btn btn-primary"&gt;
+  前往頁面
+&lt;/a&gt;
+
+/* CSS */
+a.btn {
+  text-decoration: none;   /* 去掉底線 */
+  display: inline-flex;
+  align-items: center;
+}</div>
+        <div class="warn-box warn-red">⚠️ 踩雷：a 標籤預設有底線和藍色，要加 text-decoration: none 和 color 才像按鈕</div>
+      </div>
+
+    </div>
+
+    <!-- 完整範本 -->
+    <div style="margin-top:14px;">
+      <div style="background:var(--green-light);border-radius:var(--radius-lg);padding:16px 20px;">
+        <div style="font-size:13px;font-weight:600;color:var(--green-dark);margin-bottom:10px;">📋 完整按鈕範本 — 直接複製貼進 custom.css</div>
+        <div class="code-block" style="margin:0;">.btn {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #7F77DD;
+  color: white;
+  transition: background 0.2s ease,
+              transform 0.15s ease,
+              box-shadow 0.2s ease;
+}
+.btn:hover {
+  background: #534AB7;
+  box-shadow: 0 4px 12px rgba(127,119,221,0.35);
+}
+.btn:active {
+  transform: scale(0.97);
+  background: #3C3489;
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn:focus-visible {
+  outline: 2px solid #7F77DD;
+  outline-offset: 2px;
+}
+
+/* 變體 */
+.btn-outline {
+  background: transparent;
+  color: #7F77DD;
+  border: 1.5px solid #7F77DD;
+}
+.btn-ghost {
+  background: transparent;
+  color: inherit;
+  border: 1.5px solid currentColor;
+}
+.btn-danger { background: #E24B4A; color: white; }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.btn-lg { padding: 14px 32px; font-size: 16px; }
+.btn-full { width: 100%; }</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   3. 間距控制               -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="spacing">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--teal-light);">📐</div>
+      <div>
+        <div class="section-title">間距控制</div>
+        <div class="section-sub">padding · margin · gap</div>
+      </div>
+    </div>
+
+    <div class="info-box" style="background:var(--teal-light);">
+      <div class="info-box-title" style="color:var(--teal-dark);">🧠 設計師記憶口訣</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;">
+        <div style="background:white;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:22px;margin-bottom:4px;">🏠</div>
+          <div style="font-size:13px;font-weight:600;color:var(--teal-dark);">padding</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px;">室內空間<br>元素內部</div>
+        </div>
+        <div style="background:white;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:22px;margin-bottom:4px;">🏘️</div>
+          <div style="font-size:13px;font-weight:600;color:var(--teal-dark);">margin</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px;">棟距<br>元素外部</div>
+        </div>
+        <div style="background:white;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:22px;margin-bottom:4px;">🛋️</div>
+          <div style="font-size:13px;font-weight:600;color:var(--teal-dark);">gap</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px;">家具間距<br>Flex/Grid 用</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-grid">
+      <div class="prop-card teal-accent">
+        <div class="prop-name">padding</div>
+        <div class="prop-desc">元素內容與邊框之間的距離，讓內容有呼吸感。</div>
+        <div class="code-block">padding: 16px;
+padding: 12px 24px;         /* 上下 左右 */
+padding: 8px 16px 12px 16px; /* 上右下左 */
+padding-top: 20px;</div>
+        <div class="warn-box warn-red">⚠️ 踩雷：padding 會讓元素變大。設了 width 再加 padding 會爆版，用 box-sizing: border-box 解決</div>
+      </div>
+      <div class="prop-card teal-accent">
+        <div class="prop-name">margin</div>
+        <div class="prop-desc">元素和其他元素之間的距離，margin: 0 auto 可水平置中。</div>
+        <div class="code-block">margin: 16px;
+margin: 0 auto;         /* 水平置中 ✦ */
+margin-bottom: 24px;
+margin: -10px;          /* 負值可讓元素重疊 */</div>
+        <div class="warn-box warn-amber">💡 margin: 0 auto 要搭配 width 才能置中，只寫 auto 沒有用</div>
+      </div>
+      <div class="prop-card teal-accent">
+        <div class="prop-name">gap</div>
+        <div class="prop-desc">Flex 或 Grid 容器中子元素的間距，比 margin 更好控制。</div>
+        <div class="code-block">gap: 16px;
+gap: 8px 16px;     /* 垂直 水平 */
+row-gap: 8px;
+column-gap: 16px;</div>
+        <div class="warn-box warn-teal">✅ 推薦：多個子元素排列，用 gap 代替每個都設 margin，更乾淨！</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   4. 文字設定               -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="typography">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--amber-light);">🔤</div>
+      <div>
+        <div class="section-title">文字設定</div>
+        <div class="section-sub">font-size · font-weight · line-height · letter-spacing · text-align</div>
+      </div>
+    </div>
+    <div class="prop-grid">
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">font-size</div>
+        <div class="prop-desc">文字大小，設計師建議用 px 對應 Figma 標注。</div>
+        <div class="code-block">font-size: 16px;   /* 標準內文 */
+font-size: 14px;   /* 輔助文字 */
+font-size: 24px;   /* 小標題 */
+font-size: 1rem;   /* = 16px */</div>
+        <div style="background:var(--bg2);border-radius:var(--radius-md);padding:10px 14px;margin-top:4px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">常見字級對照</div>
+          <div class="qr-grid">
+            <div class="qr-row"><span class="qr-key">主標題</span><span class="qr-val">32–48px</span></div>
+            <div class="qr-row"><span class="qr-key">次標題</span><span class="qr-val">20–28px</span></div>
+            <div class="qr-row"><span class="qr-key">內文</span><span class="qr-val">14–16px</span></div>
+            <div class="qr-row"><span class="qr-key">說明文字</span><span class="qr-val">12–13px</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">font-weight</div>
+        <div class="prop-desc">文字粗細。數字越大越粗，不是所有字體都有全部字重。</div>
+        <div class="code-block">font-weight: 400;   /* 正常 = normal */
+font-weight: 500;   /* 中等 */
+font-weight: 600;   /* semi-bold */
+font-weight: 700;   /* 粗體 = bold */</div>
+        <div class="warn-box warn-red">⚠️ 踩雷：字體沒有載入對應字重會自動模擬，看起來很醜！確認 Google Fonts 有引入那個字重</div>
+      </div>
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">line-height</div>
+        <div class="prop-desc">行高，控制多行文字的行距，影響閱讀舒適度很大。</div>
+        <div class="code-block">line-height: 1.6;   /* 推薦內文值 */
+line-height: 1.2;   /* 緊湊，適合標題 */
+line-height: 1.8;   /* 寬鬆，適合長文 */</div>
+        <div class="warn-box warn-amber">💡 無單位（如 1.6）是相對字體大小，比固定 px 更彈性</div>
+      </div>
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">letter-spacing</div>
+        <div class="prop-desc">字元間距，微調文字疏密感。標題常見拉開，標籤文字也常用。</div>
+        <div class="code-block">letter-spacing: 0.05em;  /* 微拉開，標題 */
+letter-spacing: 0.1em;   /* 明顯拉開，全大寫 */
+letter-spacing: -0.02em; /* 收緊，大字體 */
+letter-spacing: normal;</div>
+      </div>
+
+      <div class="prop-card amber-accent">
+        <div class="prop-name">text-align</div>
+        <div class="prop-desc">文字水平對齊方式。</div>
+        <div class="code-block">text-align: left;     /* 靠左（預設）*/
+text-align: center;   /* 置中 */
+text-align: right;    /* 靠右 */
+text-align: justify;  /* 兩端對齊 */</div>
+        <div class="warn-box warn-red">⚠️ 踩雷：justify 在中文會造成奇怪字距，通常不適合中文排版</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   5. Flex 排版              -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="flex">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--coral-light);">🧱</div>
+      <div>
+        <div class="section-title">Flex 排版</div>
+        <div class="section-sub">display: flex · justify-content · align-items · flex-direction</div>
+      </div>
+    </div>
+
+    <div class="info-box" style="background:var(--coral-light);">
+      <div class="info-box-title" style="color:var(--coral-dark);">🧠 Flex 概念：一個容器管一排子元素</div>
+      <div class="info-box-body" style="color:var(--coral-dark);opacity:0.9;">
+        父元素加 display: flex → 子元素自動橫排<br>
+        justify-content = 水平分配 ／ align-items = 垂直對齊
+      </div>
+    </div>
+
+    <div class="prop-grid">
+      <div class="prop-card coral-accent">
+        <div class="prop-name">display: flex</div>
+        <div class="prop-desc">讓容器變成 Flex，子元素預設水平排列。</div>
+        <div class="code-block">display: flex;
+flex-wrap: wrap;    /* 允許換行 */
+flex-wrap: nowrap;  /* 強制一排 */</div>
+        <div class="flex-demo">
+          <div class="flex-box">A</div>
+          <div class="flex-box">B</div>
+          <div class="flex-box">C</div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);text-align:center;">↑ 套了 display: flex 的效果</div>
+      </div>
+
+      <div class="prop-card coral-accent">
+        <div class="prop-name">justify-content</div>
+        <div class="prop-desc">控制主軸（預設水平）方向的排列方式。</div>
+        <div class="code-block">justify-content: flex-start;    /* 靠左 */
+justify-content: center;        /* 置中 */
+justify-content: flex-end;      /* 靠右 */
+justify-content: space-between; /* 兩端 */
+justify-content: space-around;  /* 平均 */</div>
+        <div class="row-label">最常用</div>
+        <div class="tag-row">
+          <span class="tag tag-coral">center</span>
+          <span class="tag tag-coral">space-between</span>
+        </div>
+      </div>
+
+      <div class="prop-card coral-accent">
+        <div class="prop-name">align-items</div>
+        <div class="prop-desc">控制交叉軸（預設垂直）方向的對齊方式。</div>
+        <div class="code-block">align-items: stretch;    /* 撐滿（預設）*/
+align-items: center;     /* 垂直置中 ✦ */
+align-items: flex-start; /* 靠上 */
+align-items: flex-end;   /* 靠下 */</div>
+        <div class="warn-box warn-teal">✅ justify-content: center + align-items: center = 完美水平垂直置中！</div>
+      </div>
+
+      <div class="prop-card coral-accent">
+        <div class="prop-name">flex-direction</div>
+        <div class="prop-desc">改變排列方向，可以變成垂直堆疊。</div>
+        <div class="code-block">flex-direction: row;          /* 橫排（預設）*/
+flex-direction: column;       /* 直排 ↓ */
+flex-direction: row-reverse;  /* 橫排反向 */</div>
+        <div class="warn-box warn-amber">💡 設定 column 後，justify-content 控制垂直，align-items 控制水平，方向對換！</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   6. 圖片控制               -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="image">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--blue-light);">🖼</div>
+      <div>
+        <div class="section-title">圖片控制</div>
+        <div class="section-sub">object-fit · background-size · background-position</div>
+      </div>
+    </div>
+    <div class="prop-grid">
+
+      <div class="prop-card blue-accent">
+        <div class="prop-name">object-fit</div>
+        <div class="prop-desc">控制 &lt;img&gt; 在固定容器裡的裁切方式，就像 Figma 的 Fill / Fit。</div>
+        <div class="code-block">object-fit: cover;    /* 填滿裁切 ✦ */
+object-fit: contain;  /* 縮放保留全圖 */
+object-fit: fill;     /* 拉伸填滿（變形）*/
+object-fit: none;     /* 原尺寸 */</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0;">
+          <div style="background:var(--blue-light);border-radius:8px;height:56px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--blue-dark);font-weight:600;">cover<br><span style="font-weight:400;font-size:11px;">填滿裁切</span></div>
+          <div style="background:var(--bg2);border-radius:8px;height:56px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text2);">contain<br><span style="font-size:11px;">保留全圖</span></div>
+        </div>
+        <div class="warn-box warn-amber">💡 &lt;img&gt; 必須設 width 和 height，object-fit 才有作用</div>
+      </div>
+
+      <div class="prop-card blue-accent">
+        <div class="prop-name">background-size</div>
+        <div class="prop-desc">背景圖的縮放方式，用在 background-image 上。</div>
+        <div class="code-block">background-size: cover;    /* 填滿容器 */
+background-size: contain;  /* 保留完整圖 */
+background-size: 100% auto;
+background-size: 300px;</div>
+        <div class="row-label">常見搭配</div>
+        <div class="tag-row">
+          <span class="tag tag-blue">background-position</span>
+          <span class="tag tag-blue">background-repeat</span>
+        </div>
+      </div>
+
+      <div class="prop-card blue-accent">
+        <div class="prop-name">background-position</div>
+        <div class="prop-desc">控制背景圖的起始位置，搭配 cover 使用特別重要。</div>
+        <div class="code-block">background-position: center;
+background-position: top center;
+background-position: 50% 30%;
+background-position: left bottom;</div>
+        <div class="warn-box warn-teal">✅ 人物照片建議 background-position: top center，避免臉被裁掉</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   7. Hover 效果              -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="hover">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--pink-light);">✨</div>
+      <div>
+        <div class="section-title">Hover 效果</div>
+        <div class="section-sub">transition · transform · opacity</div>
+      </div>
+    </div>
+    <div class="prop-grid">
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">transition</div>
+        <div class="prop-desc">讓屬性改變時有動畫過渡，讓 hover 效果不突兀。</div>
+        <div class="code-block">transition: all 0.3s ease;
+transition: background 0.2s ease;
+transition:
+  transform 0.3s ease,
+  box-shadow 0.3s ease;</div>
+        <div class="warn-box warn-red">⚠️ 踩雷：transition 要寫在原始狀態（非 :hover），不然 hover 走之後動畫消失是瞬間切換的</div>
+      </div>
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">transform</div>
+        <div class="prop-desc">對元素做位移、縮放、旋轉，不影響其他元素的位置。</div>
+        <div class="code-block">transform: translateY(-4px); /* 往上移 */
+transform: scale(1.05);     /* 放大 5% */
+transform: rotate(45deg);   /* 旋轉 */
+transform:
+  translateY(-4px) scale(1.02);</div>
+        <div class="warn-box warn-teal">✅ transform 不觸發 reflow（重排），動畫效能比改 margin 好很多</div>
+      </div>
+
+      <div class="prop-card pink-accent">
+        <div class="prop-name">opacity</div>
+        <div class="prop-desc">元素透明度，0 = 完全透明，1 = 完全不透明。</div>
+        <div class="code-block">opacity: 1;      /* 完全顯示 */
+opacity: 0.7;    /* 七成不透明 */
+opacity: 0;      /* 隱藏（仍佔空間）*/
+
+.btn { opacity: 0.85; transition: opacity 0.2s; }
+.btn:hover { opacity: 1; }</div>
+        <div class="warn-box warn-red">⚠️ opacity: 0 元素不顯示但仍佔空間且仍可點擊！要真正隱藏用 display: none</div>
+      </div>
+
+    </div>
+
+    <div style="background:var(--pink-light);border-radius:var(--radius-lg);padding:16px 20px;margin-top:14px;">
+      <div style="font-size:13px;font-weight:600;color:var(--pink-dark);margin-bottom:10px;">✦ 經典 Hover 浮起卡片組合</div>
+      <div class="code-block" style="margin:0;">.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}</div>
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   8. 容器設定               -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="container">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-light);">📦</div>
+      <div>
+        <div class="section-title">容器設定</div>
+        <div class="section-sub">width · max-width · min-height · margin: 0 auto</div>
+      </div>
+    </div>
+    <div class="prop-grid">
+
+      <div class="prop-card green-accent">
+        <div class="prop-name">width / max-width</div>
+        <div class="prop-desc">width 是固定寬，max-width 是最大不超過，適合自適應容器。</div>
+        <div class="code-block">width: 100%;        /* 撐滿父容器 */
+width: 360px;       /* 固定寬度 */
+max-width: 1200px;  /* 最寬不超過 */
+max-width: 600px;   /* 內文容器常用 */</div>
+        <div class="warn-box warn-teal">✅ 最佳實踐：width: 100% + max-width: 1200px + margin: 0 auto = 響應式置中容器</div>
+      </div>
+
+      <div class="prop-card green-accent">
+        <div class="prop-name">min-height</div>
+        <div class="prop-desc">設定最小高度，讓容器沒有內容時也不塌陷。</div>
+        <div class="code-block">min-height: 100vh;  /* 至少滿一個螢幕 */
+min-height: 200px;
+min-height: 0;      /* 取消最小高限制 */</div>
+      </div>
+
+      <div class="prop-card green-accent">
+        <div class="prop-name">margin: 0 auto（黃金置中組合）</div>
+        <div class="prop-desc">最常用的水平置中方式，上下設 0，左右自動平分。</div>
+        <div class="code-block">.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;   /* 水平置中 */
+  padding: 0 24px;  /* 手機留邊距 */
+}</div>
+        <div class="warn-box warn-amber">⚠️ 踩雷：只對 block 元素有效，inline 元素先加 display: block</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ╔══════════════════════════╗ -->
+  <!--   9. DevTools              -->
+  <!-- ╚══════════════════════════╝ -->
+  <div class="section" id="devtools">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--purple-light);">🔧</div>
+      <div>
+        <div class="section-title">Chrome DevTools 工作流程</div>
+        <div class="section-sub">設計師實戰除錯 SOP</div>
+      </div>
+    </div>
+
+    <div style="background:var(--purple-light);border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:600;color:var(--purple-dark);margin-bottom:16px;">標準流程 — 從選元素到寫 CSS</div>
+      <div>
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-content">
+            <div class="flow-title">選取元素</div>
+            <div class="flow-desc">在頁面右鍵 → 檢查（Inspect），或按 F12 打開 DevTools，點左上角箭頭後點元素</div>
+          </div>
+        </div>
+        <div class="flow-step"><div class="flow-connector"><div class="flow-line"></div></div><div></div></div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-content">
+            <div class="flow-title">用 element.style 測試效果</div>
+            <div class="flow-desc">在右側 Styles 面板最上方的 element.style 直接輸入 CSS，即時預覽，不影響原始碼</div>
+          </div>
+        </div>
+        <div class="flow-step"><div class="flow-connector"><div class="flow-line"></div></div><div></div></div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-content">
+            <div class="flow-title">確認效果滿意</div>
+            <div class="flow-desc">調整到視覺滿意為止，記下你用的屬性和數值</div>
+          </div>
+        </div>
+        <div class="flow-step"><div class="flow-connector"><div class="flow-line"></div></div><div></div></div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-content">
+            <div class="flow-title">找到元素的 class 名稱</div>
+            <div class="flow-desc">在 Elements 面板找到 HTML 標籤，讀出 class="products-list item" 這樣的名稱</div>
+          </div>
+        </div>
+        <div class="flow-step"><div class="flow-connector"><div class="flow-line"></div></div><div></div></div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-content">
+            <div class="flow-title">寫成正確的 Selector</div>
+            <div class="flow-desc">將 element.style 的寫法轉成 .products-list .item { ... } 的格式</div>
+          </div>
+        </div>
+        <div class="flow-step"><div class="flow-connector"><div class="flow-line"></div></div><div></div></div>
+        <div class="flow-step">
+          <div class="flow-num">6</div>
+          <div class="flow-content">
+            <div class="flow-title">貼回 custom.css 儲存</div>
+            <div class="flow-desc">刷新頁面確認效果持續 ✅</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:white;border:0.5px solid var(--border2);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:600;margin-bottom:14px;">⚡ element.style vs. Selector 有什麼不同？</div>
+      <table class="vs-table">
+        <thead>
+          <tr><th>比較</th><th>element.style</th><th>.products-list .item</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--text2);">作用範圍</td>
+            <td>只影響<strong>這一個</strong>元素</td>
+            <td>影響<strong>所有符合</strong>的元素</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text2);">優先級</td>
+            <td>最高（蓋掉其他 CSS）</td>
+            <td>依選取器權重決定</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text2);">用途</td>
+            <td>DevTools 快速測試用</td>
+            <td>正式寫進 custom.css</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text2);">持久性</td>
+            <td>刷新頁面就消失 ❌</td>
+            <td>永久生效 ✅</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background:var(--bg2);border-radius:var(--radius-lg);padding:18px 20px;">
+      <div style="font-size:13px;font-weight:600;margin-bottom:12px;">🛟 常見除錯情境快查</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;">
+          <span style="color:var(--red);font-weight:600;white-space:nowrap;flex-shrink:0;">CSS 沒效果？</span>
+          <span style="color:var(--text2);">打開 DevTools，看 Styles 面板有沒有被<span style="text-decoration:line-through">刪除線</span>蓋掉，代表被其他 CSS 覆寫，需要更精確的 selector 或加 !important</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;">
+          <span style="color:var(--red);font-weight:600;white-space:nowrap;flex-shrink:0;">元素不置中？</span>
+          <span style="color:var(--text2);">確認父層有 display: flex + justify-content: center，或元素有設 width 才能用 margin: auto</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;">
+          <span style="color:var(--red);font-weight:600;white-space:nowrap;flex-shrink:0;">圖片變形？</span>
+          <span style="color:var(--text2);">加上 object-fit: cover，並確認 width / height 都有設定</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;">
+          <span style="color:var(--red);font-weight:600;white-space:nowrap;flex-shrink:0;">圓角沒裁圖？</span>
+          <span style="color:var(--text2);">在外層容器加 overflow: hidden</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;">
+          <span style="color:var(--red);font-weight:600;white-space:nowrap;flex-shrink:0;">Hover 動畫沒有？</span>
+          <span style="color:var(--text2);">確認 transition 是寫在原始狀態，不是在 :hover 裡</span>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;">
+          <span style="color:var(--red);font-weight:600;white-space:nowrap;flex-shrink:0;">按鈕字體怪？</span>
+          <span style="color:var(--text2);">button 標籤加 font-family: inherit，預設不繼承字體</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    網頁設計師 CSS Cheat Sheet · 以設計師思維整理 · 方便日後快速查閱
+  </div>
+
+</div>
+</body>
+</html>
